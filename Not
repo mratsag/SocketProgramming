@@ -1,0 +1,10 @@
+
+/*
+gcc server.c -o server -lpthread -lcurl -lcjson -I/Users/muratsag/Desktop/Working/SocketProgramming/cjson -L/Users/muratsag/Desktop/Working/SocketProgramming/cjson/build;
+./server
+export DYLD_LIBRARY_PATH=/Users/muratsag/Desktop/Working/SocketProgramming/cjson/build:$DYLD_LIBRARY_PATH
+
+gcc client.c -o client
+./client
+
+*/
