@@ -5,6 +5,7 @@
 #include <arpa/inet.h>
 #include <pthread.h>
 #include <curl/curl.h>
+#include "dotenv.h" // dotenv için gerekli başlık dosyası
 #include "cJSON.h"
 
 #define PORT 8080
@@ -37,8 +38,16 @@ char *fetch_weather_data(const char *city) {
     CURLcode res;
     struct Memory chunk = {0};
 
+    // Load API key from environment variables
+    dotenv_load(".env"); // .env dosyasını yükle
+    const char *api_key = getenv("OPENWEATHER_API_KEY");
+    if (!api_key) {
+        fprintf(stderr, "API key not found in environment variables\n");
+        return NULL;
+    }
+
     char url[BUFFER_SIZE];
-    snprintf(url, BUFFER_SIZE, "http://api.openweathermap.org/data/2.5/weather?q=%s&appid=c053c6525483b5222dbd11fd59549c04&units=metric", city);
+    snprintf(url, BUFFER_SIZE, "http://api.openweathermap.org/data/2.5/weather?q=%s&appid=%s&units=metric", city, api_key);
 
     curl = curl_easy_init();
     if (curl) {
